@@ -1,23 +1,51 @@
 # Another Example Mod
 
-This mod serves as a collection of code examples and patching demonstration for the Necesse modding community.
-I recommend backing up your character and creating a new world for the mod. Although it should not break your current saves
-the mod serves to be an example. You have been warned.
+Just another example mod for the 
+Necesse modding community.
 
+[!CAUTION]
+It is recommend to:
 
-### Be aware that using the @Advice.OnMethodEnter(skipOn = ...) annotation in a mod's patch can cause conflict issues
-### If an earlier-loaded mod uses skipOn and returns a value that triggers the skip, our patch will be entirely bypassed
+1. ️Backup your character data before using this mod.  
+2. Create a new, dedicated world to test the mod's functionality.
 
-Example: Our KGameColorPatch only injects its custom color supplier if the base method returns null. 
-If another mod does the same, both mods can coexist, allowing their respective color codes to be recognized without conflict assuming they do not use the same characters.
+[!WARNING]
+⚠️Use at your own risk, features added to this mod may break saves.⚠️
 
-Other conflicts are likely to arise eventually, larger mods or conversion mods may or may not need to patch entire methods as an example.
+<details>
+<summary>👇Patching Notes👇</summary>
 
-Packets can have a processServer and processClient, a client sending a packet will cause processServer to run
-while a serverclient sending the packet will run processClient. SendToAllClients will also run processClient
+## Notes
 
+**Using @Advice.OnMethodEnter(skipOn = ...) can cause patch conflicts.
+If a previously-loaded mod triggers a skip, your patch may never run.**
 
-## Chat commands
+This mod does not utilize any method skip although InteractPatch
+patches the range while shouldPatchInteractRange is true
+
+`if (originalValue != null) return originalValue;`
+
+If possible avoid patching non-null returns use a return check like above.
+</details>
+
+------
+
+<details>
+<summary>👇Packet & network notes👇</summary>
+
+Packets can have a processServer and processClient
+
+Client sending a packet will run processServer
+
+ServerClient sending a packet will run processClient
+
+SendToAllClients runs processClient on all connected clients
+</details>
+
+---------
+
+<details >
+<summary>👇Chat commands👇</summary>
 * settrinketslots amount - Adds more trinket slots to player
 
 * settotalsets amount - Add more sets
@@ -27,7 +55,9 @@ while a serverclient sending the packet will run processClient. SendToAllClients
 * givebuff buff duration(default 10000), enable particle effect(default on) on/off, gives an assortment of buffs. is a cheat
 
 * examplecommand  int peram as example, string preset as example
+</details>
 
 
-Check out the [modding wiki page](https://necessewiki.com/Modding) for more.
+Check out the [modding wiki page](https://necessewiki.com/Modding) for more.\
 Fairs example mod [Fair's ExampleMod](https://github.com/DrFair/ExampleMod)
+

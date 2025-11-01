@@ -3,7 +3,7 @@ package AnotherExampleMod;
 import AnotherExampleMod.Patch.SpawnPacketPatch;
 import necesse.engine.util.GameRandom;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 

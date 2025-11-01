@@ -21,8 +21,7 @@ public class SpawnPacketPatch {
     @Advice.OnMethodExit
     static void onExit(@Advice.This ServerClient serverClient, @Advice.Argument(0) PacketSpawnPlayer player) {
         //No need to run our logic on a server
-        if (ModMain.isServer)
-            return;
+        if (ModMain.isServer) return;
         if (!ModMain.modClientLoop.hasSentSpawnMessage) runInitialSetup(serverClient);
     }
 

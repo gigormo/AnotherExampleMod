@@ -1,7 +1,7 @@
 package AnotherExampleMod.Patch;
 
-import AnotherExampleMod.ModMain;
 import AnotherExampleMod.ExampleSettings;
+import AnotherExampleMod.ModMain;
 import necesse.engine.modLoader.annotations.ModMethodPatch;
 import necesse.level.gameObject.GameObject;
 import necesse.level.maps.Level;

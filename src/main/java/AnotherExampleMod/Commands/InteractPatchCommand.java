@@ -11,7 +11,7 @@ import necesse.engine.network.server.ServerClient;
 
 /**
  * Command that enables {@link ExampleSettings#shouldPatchInteractRange}.
- *
+ * <p>
  * The command takes a parameter handled by
  * {@link PresetStringParameterHandler}.
  * Valid arguments are "off" and "on". NonOptional

@@ -32,7 +32,7 @@ public class TotalSetsCommand extends ModularChatCommand {
                 commandLog.add(GameColor.RED.getColorCode() + "Set amount cannot exceed : " + ExampleSettings.maxSets);
                 return;
             }
-            if(ModMain.isDevMode) {
+            if (ModMain.isDevMode) {
                 System.out.println("totalsets command exceeds mods maxSets limit." + ExampleSettings.maxSets + " is the current max");
             }
             return;

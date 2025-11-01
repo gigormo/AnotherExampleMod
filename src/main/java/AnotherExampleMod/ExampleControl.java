@@ -11,6 +11,7 @@ public class ExampleControl {
     /**
      * Registers mod hotkeys, should be called in init()
      * For valid key codes, see:
+     *
      * @see necesse.engine.input.InputID
      */
     public static void registerHotkeys() {

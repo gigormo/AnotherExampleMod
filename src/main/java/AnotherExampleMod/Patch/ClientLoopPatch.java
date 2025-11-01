@@ -14,7 +14,7 @@ import net.bytebuddy.asm.Advice;
 public class ClientLoopPatch {
     @Advice.OnMethodExit
     static void onExit(@Advice.This ClientGameLoop clientGameLoop, @Advice.FieldValue("firstTick") boolean b) {
-        if(ModMain.isDevMode) {
+        if (ModMain.isDevMode) {
             System.out.println("Trigger client loop event : " + clientGameLoop.getName());
         }
         GameEvents.triggerEvent(new ModLoopEvent(clientGameLoop));

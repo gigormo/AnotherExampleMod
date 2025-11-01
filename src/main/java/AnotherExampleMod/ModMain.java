@@ -1,7 +1,10 @@
 package AnotherExampleMod;
 
 import AnotherExampleMod.Buffs.ExampleBuff;
-import AnotherExampleMod.Commands.*;
+import AnotherExampleMod.Commands.BuffCommand;
+import AnotherExampleMod.Commands.ExampleCommand;
+import AnotherExampleMod.Commands.InteractPatchCommand;
+import AnotherExampleMod.Commands.TrinketSlotCommand;
 import AnotherExampleMod.Events.ModLoopEvent;
 import AnotherExampleMod.Patch.ClientLoopPatch;
 import AnotherExampleMod.Patch.ServerLoopPatch;

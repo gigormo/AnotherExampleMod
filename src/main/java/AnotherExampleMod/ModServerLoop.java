@@ -39,7 +39,7 @@ public class ModServerLoop implements GameLoopListener {
     }
 
 
-    public void getClientLoop(){
+    public void getClientLoop() {
 
     }
 

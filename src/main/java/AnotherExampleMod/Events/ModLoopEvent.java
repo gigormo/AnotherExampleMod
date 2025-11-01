@@ -16,6 +16,7 @@ public class ModLoopEvent extends GameEvent {
         this.gameloop = gameloop;
         this.server = server;
     }
+
     public ModLoopEvent(GameLoop gameloop) {
         this.gameloop = gameloop;
         this.server = null;

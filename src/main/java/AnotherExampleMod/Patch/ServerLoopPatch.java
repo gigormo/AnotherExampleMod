@@ -17,7 +17,7 @@ import net.bytebuddy.asm.Advice;
 public class ServerLoopPatch {
     @Advice.OnMethodExit
     static void onExit(@Advice.This ServerGameLoop serverGameLoop, @Advice.Argument(0) Server server) {
-        if(ModMain.isDevMode) {
+        if (ModMain.isDevMode) {
             System.out.println("Trigger server loop event : " + serverGameLoop.getName());
         }
         GameEvents.triggerEvent(new ModLoopEvent(serverGameLoop, server));

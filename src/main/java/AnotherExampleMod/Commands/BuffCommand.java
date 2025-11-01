@@ -18,6 +18,7 @@ import necesse.entity.mobs.buffs.staticBuffs.Buff;
  * Command that takes a buff duration {@link IntParameterHandler}, and a string yes/no {@link PresetStringParameterHandler}
  * Checks if user entered a time, checks if particle should emit(by default yes),
  * activate the buff, add it to playerMob
+ *
  * @see necesse.engine.commands.parameterHandlers Param Handlers
  * @see ExampleParticle ExampleParticle
  * @see ExampleBuff ExampleBuff

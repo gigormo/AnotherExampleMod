@@ -32,7 +32,7 @@ public class TrinketSlotCommand extends ModularChatCommand {
                 commandLog.add(GameColor.RED.getColorCode() + "Trinket slots cannot exceed : " + ExampleSettings.maxTrinkets);
                 return;
             }
-            if(ModMain.isDevMode) {
+            if (ModMain.isDevMode) {
                 System.out.println("trinketslots command exceeds mods maxTrinkets limit. " + ExampleSettings.maxTrinkets + " is the current max");
 
             }

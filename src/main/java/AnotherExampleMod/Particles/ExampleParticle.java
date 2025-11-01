@@ -23,6 +23,7 @@ import java.awt.geom.Point2D;
  * An example particle effect that utilizes a {@link GameTextureSection}.
  * In EntityDrawable notice we use {@link EntityDrawable#getSortY()}
  * to sort the particle texture behind the player in our case
+ *
  * @see necesse.entity.particle.FleshParticle FleshParticle
  * @see GameTextureSection GameTextureSection
  * @see ExampleBuff#clientTick(ActiveBuff) Particle use example
