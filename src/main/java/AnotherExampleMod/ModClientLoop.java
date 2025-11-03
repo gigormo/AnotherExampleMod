@@ -1,20 +1,20 @@
 package AnotherExampleMod;
 
+import AnotherExampleMod.Buffs.ExampleBuff;
 import necesse.engine.GlobalData;
 import necesse.engine.gameLoop.GameLoop;
 import necesse.engine.gameLoop.GameLoopListener;
 import necesse.engine.gameLoop.tickManager.TickManager;
 import necesse.engine.network.client.Client;
-import necesse.engine.network.server.ServerClient;
+import necesse.engine.registries.BuffRegistry;
 import necesse.engine.state.MainGame;
 import necesse.engine.state.MainMenu;
 import necesse.engine.state.State;
 import necesse.engine.window.GameWindow;
+import necesse.entity.mobs.buffs.ActiveBuff;
 
 public class ModClientLoop implements GameLoopListener {
-    public ServerClient serverClient;
     public Client client;
-    public boolean hasSentSpawnMessage;
     private boolean isDisposed = false;
     private boolean runOnce;
     /**
@@ -30,11 +30,7 @@ public class ModClientLoop implements GameLoopListener {
         } else if (!runOnce){
             client.chat.addMessage("Client tick tick");
             runOnce = true;
-        }
-        if (serverClient != null) {
-            if (!runOnce){
-                serverClient.sendChatMessage("ServerClient Tick tick tick");
-            }
+            System.out.println(client.getPlayer());
         }
     }
 
@@ -49,7 +45,18 @@ public class ModClientLoop implements GameLoopListener {
      */
     public void frameTick(TickManager tickManager, GameWindow gameWindow) {
         if (ExampleControl.exampleKey1.isPressed()) {
-            System.out.println("isServer : " + ModMain.isServer);
+            /*
+            System.out.println("Client slot: " + client.getSlot() + " :PlayerMob slot: " + client.getPlayer(client.getPlayer().getPlayerSlot()));
+            //the slot we need is not client.slot, its the slot referenced inside playermob
+            client.network.sendPacket(new PacketExample(client.getPlayer().getPlayerSlot(), "Example client packet"));
+             */
+            ActiveBuff activeBuff = new ActiveBuff(BuffRegistry.getBuff("examplebuff"), client.getPlayer(), 1000 * 600, client.getPlayer());
+            client.getPlayer().addBuff(activeBuff, true);
+
+        } else if (ExampleControl.exampleKey2.isPressed()) {
+            if (ModMain.isDevMode)
+                System.out.println("Example key 2 pressed");
+            ExampleSettings.shouldPatchInteractRange = !ExampleSettings.shouldPatchInteractRange;
         }
         if (tickManager.isGameTick()) gameTick();
     }

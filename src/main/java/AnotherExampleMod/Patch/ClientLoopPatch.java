@@ -10,6 +10,7 @@ import net.bytebuddy.asm.Advice;
 /**
  * Patches {@link ClientGameLoop#init()} triggering {@link ModLoopEvent}
  */
+
 @ModMethodPatch(target = ClientGameLoop.class, name = "init", arguments = {})
 public class ClientLoopPatch {
     @Advice.OnMethodExit

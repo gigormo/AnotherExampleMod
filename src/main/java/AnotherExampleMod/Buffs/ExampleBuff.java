@@ -35,6 +35,7 @@ public class ExampleBuff extends Buff {
         activeBuff.setModifier(BuffModifiers.BUILD_RANGE, 5.0f);
         activeBuff.setModifier(BuffModifiers.BUILDING_SPEED, 1.5f);
         activeBuff.setModifier(BuffModifiers.MINING_SPEED, 2.0f);
+        activeBuff.setModifier(BuffModifiers.MINING_RANGE, 2.0f);
         activeBuff.setModifier(BuffModifiers.TOOL_DAMAGE, 2.0f);
         activeBuff.setModifier(BuffModifiers.SPELUNKER, true);
         activeBuff.setModifier(BuffModifiers.TREASURE_HUNTER, true);
@@ -44,7 +45,6 @@ public class ExampleBuff extends Buff {
 
     @Override
     public void serverTick(ActiveBuff buff) {
-        // You can do server ticks here
     }
 
     @Override

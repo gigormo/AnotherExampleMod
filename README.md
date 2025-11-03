@@ -1,63 +1,97 @@
+
 # Another Example Mod
 
-Just another example mod for the 
-Necesse modding community.
+Just another example mod for the Necesse modding community.
 
-[!CAUTION]
-It is recommend to:
 
-1. ️Backup your character data before using this mod.  
-2. Create a new, dedicated world to test the mod's functionality.
+>[!CAUTION]
+>It is recommend to:
+>1. ️Backup your character data before using this mod.
+>2. Create a new, dedicated world to test the mod's functionality.\
+>⚠️Use at your own risk, features added to this mod may break saves.⚠️
 
-[!WARNING]
-⚠️Use at your own risk, features added to this mod may break saves.⚠️
+---
 
-<details>
-<summary>👇Patching Notes👇</summary>
+## 🩹Patching Notes🩹
 
-## Notes
+>[!WARNING]
+>**Using @Advice.OnMethodEnter(skipOn = ...) can cause patch conflicts.
+>If a previously-loaded mod triggers a skip, your patch may never run.**
 
-**Using @Advice.OnMethodEnter(skipOn = ...) can cause patch conflicts.
-If a previously-loaded mod triggers a skip, your patch may never run.**
-
-This mod does not utilize any method skip although InteractPatch
-patches the range while shouldPatchInteractRange is true
-
+If possible avoid patching non-null returns, instead use a return check.\
 `if (originalValue != null) return originalValue;`
-
-If possible avoid patching non-null returns use a return check like above.
-</details>
 
 ------
 
+## 📦Packet & Network Notes🌐️
+
+Packets can have a processServer and processClient, 
+the client is unable to access server variables and vice versa.
+
+Think about it like this, the Client and Server are separate. If you want to "talk" to the server
+a "packet" is your voice and intent.\
+This works the opposite direction as well, "talking" to the client requires
+sending a "packet" or our voice and directive.
+
+**This is a very simplified explanation**
+
+Look at some of the packets in the Necesse source/jar to get a better understanding of how they work.
+
+Examples on how `streamClients` can be used are found in `ModServerLoop.gameTick()`
+
 <details>
-<summary>👇Packet & network notes👇</summary>
+<summary>🗒️Expand for additional notes🗒️</summary>
 
-Packets can have a processServer and processClient
+⚠️**These notes assume ️strictServerAuthority is disabled**⚠️
 
-Client sending a packet will run processServer
+An example as to what ️strictServerAuthority does below:
 
-ServerClient sending a packet will run processClient
+    If strictServerAuthority is disabled this variable `clientHandlesHit` from MobAbilityLevelEvent
+    will be true then client will perform the hit logic not the server
 
-SendToAllClients runs processClient on all connected clients
+Not all invalid packets will disconnect a client, sending the wrong slot in mods PacketExample\
+> E.g.: `PacketExample(-2, "some message")` will print a error but not disconnect the client.\
+>
+> An invalid movement packet would snap a client to the location the server expects
+>
+> An invalid PacketActiveMountAbility would disconnect a client 
+
+---
+
+    Client → Server: The client sends a packet to request an action (e.g: moving, attacking, chatting).
+    Packet runs : processServer and processClient
+
+    Server → Client: The server sends a packet to inform the client of a change (e.g: applying a buff, updating world state).
+    Packet runs : processClient
+---
 </details>
 
+---
+## ➿Gameloop Notes➿
+
+As the name suggests GameLoop is the gameloop, listeners can be added
+and are called every frame. Each listener must implement a frameTick and drawTick method
+
+In this example mod, we have a ModClientLoop and ModServerLoop class, 
+they both implement GameLoopListener
+
+`addLoopEventListeners -> trigger event -> addGameLoopListener -> ModLoop
+`
 ---------
 
-<details >
-<summary>👇Chat commands👇</summary>
-* settrinketslots amount - Adds more trinket slots to player
+## 🗨️Chat Commands💬
 
-* settotalsets amount - Add more sets
+>* settrinketslots amount - Adds more trinket slots to player
 
-* toggleinteractpatch on/off - toggles interaction range patching
+>* settotalsets amount - Add more sets
 
-* givebuff buff duration(default 10000), enable particle effect(default on) on/off, gives an assortment of buffs. is a cheat
+>* toggleinteractpatch on/off - toggles interaction range patching
 
-* examplecommand  int peram as example, string preset as example
-</details>
+>* givebuff buff duration(default 10000), enable particle effect(default on) on/off, gives an assortment of buffs. is a cheat
+
+>* examplecommand  int peram as example, string preset as example
 
 
-Check out the [modding wiki page](https://necessewiki.com/Modding) for more.\
-Fairs example mod [Fair's ExampleMod](https://github.com/DrFair/ExampleMod)
+**Check [modding wiki page](https://necessewiki.com/Modding) for more.**\
+**See also: [Fair's ExampleMod](https://github.com/DrFair/ExampleMod)**
 

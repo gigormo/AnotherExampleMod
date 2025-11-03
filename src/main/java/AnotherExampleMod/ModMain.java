@@ -6,6 +6,7 @@ import AnotherExampleMod.Commands.ExampleCommand;
 import AnotherExampleMod.Commands.InteractPatchCommand;
 import AnotherExampleMod.Commands.TrinketSlotCommand;
 import AnotherExampleMod.Events.ModLoopEvent;
+import AnotherExampleMod.Packet.PacketExample;
 import AnotherExampleMod.Patch.ClientLoopPatch;
 import AnotherExampleMod.Patch.ServerLoopPatch;
 import necesse.engine.GameEventListener;
@@ -13,10 +14,9 @@ import necesse.engine.GameEvents;
 import necesse.engine.GlobalData;
 import necesse.engine.commands.CommandsManager;
 import necesse.engine.commands.PermissionLevel;
-import necesse.engine.events.ServerClientConnectedEvent;
-import necesse.engine.events.ServerClientDisconnectEvent;
 import necesse.engine.modLoader.annotations.ModEntry;
 import necesse.engine.registries.BuffRegistry;
+import necesse.engine.registries.PacketRegistry;
 import necesse.gfx.gameTexture.GameTexture;
 import necesse.gfx.gameTexture.GameTextureSection;
 
@@ -26,6 +26,7 @@ import necesse.gfx.gameTexture.GameTextureSection;
  * {@link ModServerLoop}, {@link ModClientLoop}, mods {@link PermissionLevel},
  * and if mod is running on a server or client {@link ModMain#isServer isServer}
  */
+
 @ModEntry
 public class ModMain {
     public static ModClientLoop modClientLoop;
@@ -34,7 +35,7 @@ public class ModMain {
     // this is essentially an ifndef/ifendif.
     public static final boolean isDevMode = true;
     public static final boolean runTestPatches = false;
-    public static boolean isServer;
+    public static boolean isServer = GlobalData.isServer();
 
     /**
      * Called before preInit to initialize settings
@@ -45,8 +46,6 @@ public class ModMain {
      */
     @SuppressWarnings("unused")
     public ExampleSettings initSettings() {
-        //Setting isServer here because initSettings is called so early
-        isServer = GlobalData.isServer();
         return new ExampleSettings();
     }
 
@@ -88,11 +87,13 @@ public class ModMain {
     @SuppressWarnings("unused")
     public void init() {
         //Register mod buff
-        BuffRegistry.registerBuff("kexamplebuff", new ExampleBuff());
+        BuffRegistry.registerBuff("examplebuff", new ExampleBuff());
         //Add our event listeners
-        addEventListeners();
+        addLoopEventListeners();
         //Register hotkeys
         ExampleControl.registerHotkeys();
+        //register packets
+        PacketRegistry.registerPacket(PacketExample.class);
     }
 
     /**
@@ -119,6 +120,8 @@ public class ModMain {
         CommandsManager.registerServerCommand(new BuffCommand());
         CommandsManager.registerServerCommand(new InteractPatchCommand());
         CommandsManager.registerServerCommand(new ExampleCommand());
+        if (modServerLoop != null)
+            modServerLoop.addServerEventListeners();
     }
 
     /**
@@ -135,46 +138,31 @@ public class ModMain {
     /**
      * Method called from init, registers our event listeners
      * our Loops start here. By patching both game loops we trigger the loop events
-     * ServerClientConnectedEvent is used to reset the spawn message boolean {@link ModClientLoop#hasSentSpawnMessage}
-     * if we don't do this where a client to leave and rejoin they would not get our welcome messages
+     * ServerClientConnectedEvent is used to reset the spawn message boolean {@link ModServerLoop#hasSentSpawnMessage}
      * @see ClientLoopPatch
      * @see ServerLoopPatch
      */
-    private void addEventListeners() {
-        GameEvents.addListener(ServerClientConnectedEvent.class, new GameEventListener<ServerClientConnectedEvent>() {
-            @Override
-            public void onEvent(ServerClientConnectedEvent e) {
-                if (modClientLoop != null)
-                    modClientLoop.hasSentSpawnMessage = false;
-                if (isDevMode) {
-                    System.out.println("serverClientConnectedEvent for " + e.client.getName());
-                }
-            }
-        });
-        GameEvents.addListener(ServerClientDisconnectEvent.class, new GameEventListener<ServerClientDisconnectEvent>() {
-            @Override
-            public void onEvent(ServerClientDisconnectEvent e) {
-                if (isDevMode){
-                    System.out.println("Example listener for client disconnect" + e.client.getName());
-                }
-            }
-        });
-
+    private void addLoopEventListeners() {
         GameEvents.addListener(ModLoopEvent.class, new GameEventListener<ModLoopEvent>() {
             @Override
             public void onEvent(ModLoopEvent e) {
+                //add gameloops
                 if (isServer) {
                     e.gameloop.addGameLoopListener(modServerLoop);
-                    modServerLoop.server = e.server;
+                    modServerLoop.setServer(e.server);
                     if (isDevMode) {
                         System.out.println("ModServerLoop added to : " + e.gameloop.getName());
                     }
+                    //Dispose the event listener, we do not need it after adding our gamelooplisteners
+                    this.dispose();
                     return;
                 }
                 e.gameloop.addGameLoopListener(modClientLoop);
                 if (isDevMode) {
                     System.out.println("ModClientLoop added to : " + e.gameloop.getName() + " Client State : " + GlobalData.getCurrentState());
                 }
+                //Dispose the event listener, It's no longer needed after adding our gamelooplisteners
+                this.dispose();
             }
         });
     }

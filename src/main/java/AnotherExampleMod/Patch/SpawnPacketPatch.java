@@ -15,29 +15,21 @@ import net.bytebuddy.asm.Advice;
  *
  * @see ServerClient#submitSpawnPacket(PacketSpawnPlayer)
  */
+
 @ModMethodPatch(target = ServerClient.class, name = "submitSpawnPacket", arguments = {PacketSpawnPlayer.class})
 public class SpawnPacketPatch {
 
     @Advice.OnMethodExit
     static void onExit(@Advice.This ServerClient serverClient, @Advice.Argument(0) PacketSpawnPlayer player) {
-        //No need to run our logic on a server
-        if (ModMain.isServer) return;
-        if (!ModMain.modClientLoop.hasSentSpawnMessage) runInitialSetup(serverClient);
-    }
-
-    public static void runInitialSetup(ServerClient serverClient) {
-        if (ModMain.modClientLoop != null) ModMain.modClientLoop.serverClient = serverClient;
-        sendWelcomeMessages(serverClient);
+        serverClient.sendChatMessage(ExampleGameColors.MPURP.getColorCode() + "Thank you bunches for using the mod!!, your super awesome " + serverClient.playerMob.playerName);
         if (ModMain.isDevMode) {
             for (ExampleGameColors gc : ExampleGameColors.values()) {
                 sendColorTestMessage(serverClient, gc);
             }
         }
-        ModMain.modClientLoop.hasSentSpawnMessage = true;
-    }
-
-    public static void sendWelcomeMessages(ServerClient serverClient) {
-        serverClient.sendChatMessage(ExampleGameColors.MPURP.getColorCode() + "Thank you bunches for using the mod!!, your super awesome " + serverClient.playerMob.playerName);
+        if (ModMain.isServer){
+            ModMain.modServerLoop.hasSentSpawnMessage = true;
+        }
     }
 
     public static void sendColorTestMessage(ServerClient serverClient, ExampleGameColors color) {

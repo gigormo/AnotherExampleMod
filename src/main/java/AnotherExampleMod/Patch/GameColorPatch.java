@@ -14,6 +14,7 @@ import java.util.function.Supplier;
  *
  * @see ExampleGameColors
  */
+
 @ModMethodPatch(target = GameColor.class, name = "parseColorSupplierString", arguments = {String.class})
 public class GameColorPatch {
     @Advice.OnMethodExit

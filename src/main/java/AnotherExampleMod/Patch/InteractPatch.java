@@ -11,6 +11,7 @@ import net.bytebuddy.asm.Advice;
  * Patches {@link GameObject#getInteractRange(Level, int, int)}
  * to return 5000 of shouldPatchInteractRange is true
  */
+
 @ModMethodPatch(target = GameObject.class, name = "getInteractRange", arguments = {Level.class, int.class, int.class})
 public class InteractPatch {
     @Advice.OnMethodExit

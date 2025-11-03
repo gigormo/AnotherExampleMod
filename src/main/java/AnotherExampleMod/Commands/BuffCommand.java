@@ -11,6 +11,7 @@ import necesse.engine.commands.parameterHandlers.PresetStringParameterHandler;
 import necesse.engine.network.client.Client;
 import necesse.engine.network.server.Server;
 import necesse.engine.network.server.ServerClient;
+import necesse.engine.registries.BuffRegistry;
 import necesse.entity.mobs.buffs.ActiveBuff;
 import necesse.entity.mobs.buffs.staticBuffs.Buff;
 
@@ -32,7 +33,7 @@ public class BuffCommand extends ModularChatCommand {
     public void runModular(Client client, Server server, ServerClient serverClient, Object[] args, String[] errors, CommandLog commandLog) {
         int time = (int) args[0];
         ExampleSettings.shouldEmit = args[1] != "off";
-        ActiveBuff activeBuff = new ActiveBuff((Buff) args[2], serverClient.playerMob, time, serverClient.playerMob);
+        ActiveBuff activeBuff = new ActiveBuff(BuffRegistry.getBuff("examplebuff"), serverClient.playerMob, time, serverClient.playerMob);
         serverClient.playerMob.addBuff(activeBuff, true);
     }
 }

@@ -10,9 +10,9 @@ import necesse.engine.network.server.Server;
 import net.bytebuddy.asm.Advice;
 
 /**
- * Patches {@link ServerGameLoop} constructor triggering {@link ModLoopEvent},
- * also sets {@link ModServerLoop#server ModServerLoop.server}
+ * Patches {@link ServerGameLoop} constructor triggering {@link ModLoopEvent}
  */
+
 @ModConstructorPatch(target = ServerGameLoop.class, arguments = {Server.class, String.class, int.class})
 public class ServerLoopPatch {
     @Advice.OnMethodExit

@@ -11,6 +11,7 @@ import net.bytebuddy.asm.Advice;
  * this patch will likely run first, causing {@link tPatch1} to be skipped. In case it isn't clear
  * the original method will also be skipped
  */
+
 @ModMethodPatch(target = GameObject.class, name = "getInteractRange", arguments = {Level.class, int.class, int.class})
 public class tPatch2 {
     @Advice.OnMethodEnter(skipOn = Advice.OnNonDefaultValue.class)

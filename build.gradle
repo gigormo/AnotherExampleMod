@@ -119,7 +119,18 @@ tasks.register('runClient', JavaExec) {
     jvmArgs "-Xms1024m", "-Xmx8G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
     args "-dev", "-mod \"${buildLocation}\""
 }
+tasks.register('runClient[InstantConnect]', JavaExec) {
+    group "necesse"
+    description "Run client with current mod"
+    dependsOn "buildModJar", "createAppID"
 
+    classpath = files(gameDirectory + "/Necesse.jar")
+
+    mainClass = "StartSteamClient"
+    //jvmArgs "-Xms512m", "-Xmx4G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
+    jvmArgs "-Xms1024m", "-Xmx8G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
+    args "-dev", "-character Krunchy","-connect", "-mod \"${buildLocation}\""
+}
 tasks.register('runDevClient', JavaExec) {
     group "necesse"
     description "Run client with current mod"
@@ -144,7 +155,18 @@ tasks.register('runServer', JavaExec) {
     args "-mod \"${buildLocation}\""
 
 }
+tasks.register('runServer[World]', JavaExec) {
+    group "necesse"
+    description "Run server with current mod"
+    dependsOn "buildModJar"
 
+    classpath = files(gameDirectory + "/Server.jar")
+
+    mainClass = "StartDesktopServer"
+    jvmArgs "-Xms512m", "-Xmx4G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
+    args  "-world", "-mod \"${buildLocation}\""
+
+}
 tasks.register('buildModJar', Jar) {
     group "necesse"
     description "Generates the mod jar into the build folder"

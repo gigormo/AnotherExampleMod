@@ -25,3 +25,6 @@ local.properties
 .loadpath
 .recommenders
 .project
+
+#KrunchyIgnores
+src/main/java/AnotherExampleMod/Patch/TempPatch.java
