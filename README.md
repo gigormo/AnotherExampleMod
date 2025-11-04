@@ -3,6 +3,12 @@
 
 Just another example mod for the Necesse modding community.
 
+The examples and notes in this repo maybe be confusing,
+I've likely not used the best or even the correct wording. 
+
+In any case I hope you find the examples here helpful, and if your confused you can
+always send me a DM on discord at `ichibankrunchy` or reach out in the
+[Necesse discord](https://discord.gg/FAFgrKD). Don't be afraid to ask questions and learn.
 
 >[!CAUTION]
 >It is recommend to:
@@ -75,8 +81,7 @@ and are called every frame. Each listener must implement a frameTick and drawTic
 In this example mod, we have a ModClientLoop and ModServerLoop class, 
 they both implement GameLoopListener
 
-`addLoopEventListeners -> trigger event -> addGameLoopListener -> ModLoop
-`
+> `addLoopEventListeners -> trigger event -> addGameLoopListener -> ModLoop`
 ---------
 
 ## 🗨️Chat Commands💬
