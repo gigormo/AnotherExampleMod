@@ -1,0 +1,11 @@
+[ui]
+modsettings=Mod Settings
+
+[modcontrols]
+examplekey1=Example Key(1)
+examplekey2=Example Key(2)
+
+[modsettingsui]
+examplecheckbox=Example Checkbox
+exampleslider=Example Slider
+front=Mod Settings

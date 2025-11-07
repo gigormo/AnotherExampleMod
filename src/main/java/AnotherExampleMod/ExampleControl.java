@@ -15,8 +15,8 @@ public class ExampleControl {
      * @see necesse.engine.input.InputID
      */
     public static void registerHotkeys() {
-        LocalMessage exampleKey1Message = new LocalMessage("controls", "examplekey1");
-        LocalMessage exampleKey2Message = new LocalMessage("controls", "examplekey2");
+        LocalMessage exampleKey1Message = new LocalMessage("modcontrols", "examplekey1");
+        LocalMessage exampleKey2Message = new LocalMessage("modcontrols", "examplekey2");
         //Key Numpad0
         Control control1 = new Control(320, "examplekey1", exampleKey1Message);
         //Key Numpad1

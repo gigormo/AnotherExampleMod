@@ -1,6 +1,5 @@
 package AnotherExampleMod;
 
-import AnotherExampleMod.Presets.ModSettingsForm;
 import necesse.engine.GlobalData;
 import necesse.engine.gameLoop.GameLoop;
 import necesse.engine.gameLoop.GameLoopListener;
@@ -12,15 +11,12 @@ import necesse.engine.state.MainMenu;
 import necesse.engine.state.State;
 import necesse.engine.window.GameWindow;
 import necesse.entity.mobs.buffs.ActiveBuff;
-import necesse.gfx.forms.Form;
 
 
 public class ModClientLoop implements GameLoopListener {
-    public ModSettingsForm modSettingsForm;
     public Client client;
     private boolean isDisposed = false;
     private boolean runOnce;
-    private Form mainMenu;
     /**
      * called from {@link ModClientLoop#frameTick(TickManager, GameWindow) frameTick}
      * gameTick logic should be handled here, runs at 20tps
@@ -55,7 +51,7 @@ public class ModClientLoop implements GameLoopListener {
             //the slot we need is not client.slot, its the slot referenced inside playermob
             client.network.sendPacket(new PacketExample(client.getPlayer().getPlayerSlot(), "Example client packet"));
              */
-            ActiveBuff activeBuff = new ActiveBuff(BuffRegistry.getBuff("examplebuff"), client.getPlayer(), 1000 * 600, client.getPlayer());
+            ActiveBuff activeBuff = new ActiveBuff(BuffRegistry.getBuff("examplebuff"), client.getPlayer(), 5000000, client.getPlayer());
             client.getPlayer().addBuff(activeBuff, true);
 
         } else if (ExampleControl.exampleKey2.isPressed()) {
@@ -69,7 +65,7 @@ public class ModClientLoop implements GameLoopListener {
 
 
     /**
-     * Gets the game client
+     * Get game client or null.
      *
      * @return {@link Client}
      */
@@ -84,14 +80,6 @@ public class ModClientLoop implements GameLoopListener {
 
     public boolean isDisposed() {
         return this.isDisposed;
-    }
-
-    public Form getMainMenuForm() {
-        return mainMenu;
-    }
-
-    public void setMainMenuForm(Form mainMenu) {
-        this.mainMenu = mainMenu;
     }
 }
 
