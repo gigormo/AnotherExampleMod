@@ -1,5 +1,10 @@
-
 # Another Example Mod
+
+>[!WARNING]
+>Mod developed using Necesse game version 1.0.2.
+>
+>Unless major changes to the Necesse engine happen the examples
+>provided here should continue to be safe to use
 
 Just another example mod for the Necesse modding community.
 
